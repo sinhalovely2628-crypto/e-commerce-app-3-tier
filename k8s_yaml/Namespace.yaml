@@ -1,0 +1,4 @@
+apiServer: apiVersion
+kind: Namespace
+metaData:
+spec:
