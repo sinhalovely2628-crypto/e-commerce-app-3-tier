@@ -1,4 +1,4 @@
-apiServer: apiVersion
+apiVersion: v1
 kind: Namespace
-metaData:
-spec:
+metadata:
+  name: ecom
