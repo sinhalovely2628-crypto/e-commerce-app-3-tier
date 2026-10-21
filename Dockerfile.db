@@ -1,4 +1,4 @@
-FROM mariadb:11
+FROM mariadb:11.8.9
 
 ENV MYSQL_ROOT_PASSWORD=rootpassword
 ENV MYSQL_DATABASE=ecomdb
