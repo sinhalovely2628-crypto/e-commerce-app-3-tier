@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ecom-web-config
+  namespace: ecom
+data:
+  DB_HOST: "ecom-db"
+  DB_PORT: "3306"
+  APP_ENV: "production"
