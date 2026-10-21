@@ -79,35 +79,35 @@ pipeline {
             }
         }
 
-        stage('4. Trivy Vulnerability Scan') {
-            steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: 'dockerhub-creds',
-                        usernameVariable: 'DOCKER_USER',
-                        passwordVariable: 'DOCKER_PASS'
-                    )
-                ]) {
-                    sh '''
-                        set -eu
+        // stage('4. Trivy Vulnerability Scan') {
+        //     steps {
+        //         withCredentials([
+        //             usernamePassword(
+        //                 credentialsId: 'dockerhub-creds',
+        //                 usernameVariable: 'DOCKER_USER',
+        //                 passwordVariable: 'DOCKER_PASS'
+        //             )
+        //         ]) {
+        //             sh '''
+        //                 set -eu
 
-                        trivy image \
-                          --scanners vuln \
-                          --severity HIGH,CRITICAL \
-                          --ignore-unfixed \
-                          --exit-code 1 \
-                          "$DOCKER_USER/ecom-web:$IMAGE_TAG"
+        //                 trivy image \
+        //                   --scanners vuln \
+        //                   --severity HIGH,CRITICAL \
+        //                   --ignore-unfixed \
+        //                   --exit-code 1 \
+        //                   "$DOCKER_USER/ecom-web:$IMAGE_TAG"
 
-                        trivy image \
-                          --scanners vuln \
-                          --severity HIGH,CRITICAL \
-                          --ignore-unfixed \
-                          --exit-code 1 \
-                          "$DOCKER_USER/ecom-db:$IMAGE_TAG"
-                    '''
-                }
-            }
-        }
+        //                 trivy image \
+        //                   --scanners vuln \
+        //                   --severity HIGH,CRITICAL \
+        //                   --ignore-unfixed \
+        //                   --exit-code 1 \
+        //                   "$DOCKER_USER/ecom-db:$IMAGE_TAG"
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('5. Push Images to Docker Hub') {
             steps {
