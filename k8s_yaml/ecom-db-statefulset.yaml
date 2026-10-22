@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: lovely28/ecom-db:b11
+          image: lovely28/ecom-db:b16
           ports:
             - name: mysql
               containerPort: 3306
@@ -54,12 +54,7 @@ spec:
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
-  volumeClaimTemplates:
-    - metadata:
-        name: mysql-data
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-data-ecom-db-0
