@@ -1,3 +1,4 @@
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -8,7 +9,8 @@ spec:
   selector:
     app: ecom-db
   ports:
-    - port: 3306
+    - name: mysql
+      port: 3306
       targetPort: 3306
 
 ---
@@ -20,9 +22,11 @@ metadata:
 spec:
   serviceName: ecom-db
   replicas: 1
+
   selector:
     matchLabels:
       app: ecom-db
+
   template:
     metadata:
       labels:
@@ -30,35 +34,41 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: sam3583558/ecom-db:v1.0
+          image: lovely28/ecom-db:b11
           ports:
-            - containerPort: 3306
+            - name: mysql
+              containerPort: 3306
+
           env:
             - name: MYSQL_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: ecom-db-secret
                   key: DB_NAME
+
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
                   name: ecom-db-secret
                   key: DB_USER
+
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: ecom-db-secret
                   key: DB_PASSWORD
+
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
 
-  # volumeClaimTemplates:
-  #   - metadata:
-  #       name: mysql-data
-  #     spec:
-  #       accessModes:
-  #         - ReadWriteOnce
-  #       resources:
-  #         requests:
-  #           storage: 1Gi   # Practice ke liye 1Gi enough hai
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+```
