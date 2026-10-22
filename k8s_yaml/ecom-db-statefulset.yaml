@@ -53,12 +53,12 @@ spec:
             - name: mysql-data
               mountPath: /var/lib/mysql
 
-  volumeClaimTemplates:
-    - metadata:
-        name: mysql-data
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi   # Practice ke liye 1Gi enough hai
+  # volumeClaimTemplates:
+  #   - metadata:
+  #       name: mysql-data
+  #     spec:
+  #       accessModes:
+  #         - ReadWriteOnce
+  #       resources:
+  #         requests:
+  #           storage: 1Gi   # Practice ke liye 1Gi enough hai
