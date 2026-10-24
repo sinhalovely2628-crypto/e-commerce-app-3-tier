@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ecommerce-lovely-codekerdos
+  namespace: ecom
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ecommerce-lovely-codekerdos.<PUBLIC-IP>.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ecom-web-svc
+                port:
+                  number: 80
+          - path: /shop
+            pathType: Prefix
+            backend:
+              service:
+                name: ecom-web-svc
+                port:
+                  number: 80
+
+    - host: shop-ecommerce-lovely-codekerdos.<PUBLIC-IP>.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ecom-web-svc
+                port:
+                  number: 80
