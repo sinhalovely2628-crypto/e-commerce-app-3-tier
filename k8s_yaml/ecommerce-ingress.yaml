@@ -26,7 +26,7 @@ spec:
                 port:
                   number: 80
 
-    - host: shop-ecommerce-lovely-codekerdos.<PUBLIC-IP>.nip.io
+    - host: shop-ecommerce-lovely-codekerdos.3.222.213.214.nip.io
       http:
         paths:
           - path: /
