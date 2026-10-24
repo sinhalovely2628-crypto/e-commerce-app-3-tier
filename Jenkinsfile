@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -30,6 +29,7 @@ pipeline {
                     test -f k8s_yaml/ecom-db-statefulset.yaml
                     test -f k8s_yaml/ecom-web-deployment.yaml
                     test -f k8s_yaml/ecom-web-service.yaml
+                    test -f k8s_yaml/ecommerce-ingress.yaml
 
                     echo "Repository and required files verified."
                 '''
@@ -368,7 +368,26 @@ for node in data["items"]:
             }
         }
 
-        stage('11. Verify Deployment') {
+        stage('11. Deploy Ingress') {
+            steps {
+                withCredentials([
+                    file(
+                        credentialsId: 'kubeconfig',
+                        variable: 'KUBECONFIG_FILE'
+                    )
+                ]) {
+                    sh '''
+                        set -eu
+                        export KUBECONFIG="$KUBECONFIG_FILE"
+
+                        kubectl apply -f k8s_yaml/ecommerce-ingress.yaml -n "$K8S_NAMESPACE"
+                        kubectl get ingress -n "$K8S_NAMESPACE"
+                    '''
+                }
+            }
+        }
+
+        stage('12. Verify Deployment') {
             steps {
                 withCredentials([
                     file(
